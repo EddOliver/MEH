@@ -29,7 +29,7 @@ def read_configuration_file(configuration_file):
         return dict()
       
 def subscribe_intent_hello(hermes, intentMessage):
-    sayMessage = "General Kenobi!"
+    sayMessage = "How are you doing"
     
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, sayMessage)
@@ -47,7 +47,7 @@ def subscribe_intent_bye(hermes, intentMessage):
     hermes.publish_end_session(current_session_id, sayMessage)
 
 def subscribe_intent_lastGlu(hermes, intentMessage):
-    sayMessage = "Your Glucose level was: the number you had via MQTT last time milimiters per deciliter"
+    sayMessage = "Your Glucose level was: 94 milimiters per deciliter"
     
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, sayMessage)
@@ -71,21 +71,24 @@ def subscribe_intent_newHeart(hermes, intentMessage):
     hermes.publish_end_session(current_session_id, sayMessage)
 
 def subscribe_intent_lastHeart(hermes, intentMessage):
-    sayMessage = "Your heart rate was the one detected via MQTT beats per minute"
+    sayMessage = "Your heart rate was 74 beats per minute"
     
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, sayMessage)
 
 def subscribe_intent_historicData(hermes, intentMessage):
     #again glunumber should be provided by an MQTT publish from the command centre, this is just for example purposes
-    glunumber= 100
+   
+ 
+    sayMessage = "Staying at a healthy weight can help you prevent and manage problems like prediabetes, type 2 diabetes, heart disease, high blood pressure and unhealthy cholesterol. Keep at it you are doing great. Try not to smoke and do contant exercise!"    
+    current_session_id = intentMessage.session_id
+    hermes.publish_end_session(current_session_id, sayMessage)
     
-    if glunumber > 200:
-        sayMessage = "Staying at a healthy weight can help you prevent and manage problems like prediabetes, type 2 diabetes, heart disease, high blood pressure and unhealthy cholesterol. Keep at it you are doing great. Try not to smoke and do contant exercise!"
-    elif glunumber > 100 and glunumber < 200:
-        sayMessage = "This is not all bad, avoid smoking as much as you can and if possible avoid it, control how much carbohydrates and fats you are eating and try to incorporate a physical activity in your daily routine."
-    elif glunumber < 100:
-        sayMessage = "Staying at a healthy weight can help you prevent and manage problems like prediabetes, type 2 diabetes, heart disease, high blood pressure and unhealthy cholesterol. Keep at it you are doing great. Try not to smoke and do contant exercise!"    
+def subscribe_intent_Help(hermes, intentMessage):
+    #again glunumber should be provided by an MQTT publish from the command centre, this is just for example purposes
+   
+ 
+    sayMessage = "Your request has been sent, the nurse will be here right away"    
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, sayMessage)
 
@@ -103,4 +106,5 @@ if __name__ == "__main__":
             .subscribe_intent("&KV4lavkZXDmNqwJXKn6Mxmx6W1jegAM6Oyr2o1PE:newHeart",         subscribe_intent_newHeart) \
             .subscribe_intent("&KV4lavkZXDmNqwJXKn6Mxmx6W1jegAM6Oyr2o1PE:lastHeart",         subscribe_intent_lastHeart) \
             .subscribe_intent("&KV4lavkZXDmNqwJXKn6Mxmx6W1jegAM6Oyr2o1PE:historicData",         subscribe_intent_historicData) \
+            .subscribe_intent("&KV4lavkZXDmNqwJXKn6Mxmx6W1jegAM6Oyr2o1PE:Help",         subscribe_intent_Help) \
             .loop_forever()
